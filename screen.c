@@ -42,7 +42,7 @@ void gotoXY(int row ,int col){
 void drawbar(int col,int height){
 	int i;
 	for(i=1;i<=height;i++){
-		gotoXY(i,col);
+		gotoXY(35-i,col);
 #ifdef UNICODE	//following codes are in coditional compilation
 		printf("%s",BAR);
 #else
@@ -50,7 +50,6 @@ void drawbar(int col,int height){
 #endif
 	}
 }
-    
 /*
  void drawrect(void) {
     for (int i = row; i < row + 2; i++) {

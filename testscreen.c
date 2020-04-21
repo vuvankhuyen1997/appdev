@@ -29,25 +29,28 @@ int main(void){
 		//sleep(1);
 		usleep(500000);
     	}
-/*
 //	printf("The following message will be BLUE"
-	setfgcolor(BLUE);
-	gotoXY(14,35);
-	printf("e1900295\n");
+	gotoXY(14, 35);
+	setfgcolor(YELLOW);
+	printf("Hello, world!\n");
+	//gotoXY(14,35);
+	//printf("e1900295\n");
 	getchar();	//wait for the user to press a key
 	drawbar(30,30);
 	drawbar(50,30);
 
-*/
+
 
 	getchar();	//after drawing bars,wait for a key
 	resetcolors();
 	clearscreen();
 	printf("this text is displayed in default color \n");
-	getchar();
-	FILE *fp = fopen("test.wav", "r");	// open the wav file in read-only
+	FILE *fp;
+	fp = fopen("test.wav", "r");	// open the wav file in read-only
 	WAVheader h = readwavhdr(fp);
-	fclose(fp);
+	//fclose(fp);
 	displaywavhdr(h);
+	wavdata(h, fp);
+	fclose(fp);
 }
 

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "sound.h"
 #include <math.h>
+#include "comm.h"
 #include "screen.h"
 
 // function definitions
@@ -30,6 +31,7 @@ void wavdata(WAVheader h, FILE *fp){
 	// our sound file uses sample rate of 16000, for 5 seconds, there are
 	// 5*16000 = 800000 samples, we want to display them into 160 bars
 	short samples[500];	// to read 500 samples from wav file
+	double max = 0.0;
 	for(int i=0; i<160; i++){
 		fread(samples, sizeof(samples), 1, fp);
 		double sum = 0.0;	//accumulate the sum
@@ -55,10 +57,18 @@ void wavdata(WAVheader h, FILE *fp){
 	drawbar(i+1, (int)20*log10(re)/3);
 
 #endif
+	if(20*log10(re)>max){
+		max = 20*log10(re);
+	}
 	}
 	// display sample rate, duration, no. of peaks on top of the screen
 	gotoXY(1, 1);	printf("Sample Rate: %d\n", h.sampleRate);
 	gotoXY(1, 75);	printf("Duration: %f s\n", (float)h.subchunk2Size/h.byteRate);
 	gotoXY(1, 150); printf("Peaks: %d\n", peaks);
+	//Position cur = getscreensize(); //get screen size
+        char postdata[100];
+        sprintf(postdata, "peaks=%d&max=%f\n", peaks, max);
+        sendpost(URL, postdata);
+
 }
 // end of file
